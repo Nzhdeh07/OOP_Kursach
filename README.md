@@ -1,4 +1,4 @@
-# OOP_Kursach
+# Kursach
 
 Baboyan Nzhdeh, group 153504
 
