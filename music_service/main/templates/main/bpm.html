@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'main/css/song_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="instraaction">
+    <h1> Определение темпа песни</h1>
+
+</div>
+<div class="artist__content">
+    <div class="media-cards">
+        <audio id="audioPlayer" controls style="display: none;" ontimeupdate="updateProgressBar()"></audio>
+        {% for key, value in songs.items %}
+        <div class="media-card" data-filepath="{{ value.audio_file.url}}">
+            <img class="media-card__image" src="{{ value.image.url }}" alt="{{ song.title }}">
+            <a class="media-card__footer">{{ value.title }}</a>
+            <a class="resultKey"></a>
+            <a class="resultMode"></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function determineKeyAndMode(filePath, card) {
+        fetch('/key/get_bpm/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({file_path: filePath})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const bpm = data.bpm;
+                const resultKeyElement = card.querySelector('.resultKey');
+                resultKeyElement.textContent = 'bpm: ' + bpm;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const mediaCards = document.querySelectorAll('.media-card');
+
+        mediaCards.forEach(function (card) {
+            card.addEventListener('click', function () {
+                const filePath = card.getAttribute('data-filepath');
+                determineKeyAndMode(filePath, card);
+            });
+        });
+    });
+
+</script>
+{% endblock %}
+
+
+

@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'main/css/song_list.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="artist__content">
+      <div class="media-cards">
+        {% for playlist in playlists %}
+          <div class="media-card">
+         <a class="media-card" href="{% url 'playlist_songs' playlist.id %}">
+          <img class="media-card__image" src="{{ playlist.image.url }}" alt="{{ playlist.title }}">
+          <a class="media-card__footer">{{ playlist.title }}</a>
+        </a>
+          </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

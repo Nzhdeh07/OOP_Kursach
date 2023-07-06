@@ -1,0 +1,145 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'main/css/song_list.css' %}">
+
+
+<script>
+    var playlist = JSON.parse('{{ playlist_json|escapejs }}');
+    var audioPlayer = new Audio();
+    var current_key = 0;
+    var audioFile = '/media/' + playlist[0].fields.audio_file;
+    audioPlayer.src = audioFile;
+
+    window.onload = function () {
+        audioPlayer = document.getElementById('audioPlayer');
+        audioPlayer.addEventListener('timeupdate', updateProgressBar);
+    };
+
+    function playSong(key) {
+        audioFile = '/media/' + playlist[key].fields.audio_file;
+
+        if (audioPlayer.paused && current_key === key) {
+            current_key = key
+            audioPlayer.play();
+            var playIcon = document.getElementById('playIcon');
+            playIcon.innerHTML = '&#10074;&#10074;';
+        } else {
+            audioPlayer.src = audioFile;
+            current_key = key
+            audioPlayer.play();
+            playIcon = document.getElementById('playIcon');
+            playIcon.innerHTML = '&#10074;&#10074;';
+        }
+        updateProgressBar();
+        updateSongTitle(key);
+    }
+
+    function playNextSong() {
+        if (current_key + 1 < playlist.length) {
+            playSong(current_key + 1);
+        } else {
+            playSong(0);
+        }
+    }
+
+    function playPreviousSong() {
+        if (current_key - 1 >= 0) {
+            playSong(current_key - 1);
+        } else {
+            // audioPlayer.pause();
+            playSong(playlist.length - 1);
+        }
+    }
+
+    function togglePlayPause() {
+        var playIcon = document.getElementById('playIcon');
+        var isPlaying = !audioPlayer.paused && !audioPlayer.ended && audioPlayer.currentTime > 0;
+
+        if (isPlaying) {
+            audioPlayer.pause();
+            playIcon.innerHTML = '&#9654;'; // Символ треугольника воспроизведения
+        } else {
+            audioPlayer.play();
+            playIcon.innerHTML = '&#10074;&#10074;'; // Символ паузы
+        }
+    }
+
+    function updateProgressBar() {
+        var audioPlayer = document.getElementById('audioPlayer');
+        var progressBar = document.getElementById('progressBar');
+        var currentTime = audioPlayer.currentTime;
+        var duration = audioPlayer.duration;
+        var progressPercent = (currentTime / duration) * 100;
+        progressBar.style.width = progressPercent + '%';
+
+        var currentTimeFormatted = formatTime(currentTime);
+        var durationFormatted = formatTime(duration);
+        document.getElementById('currentTime').textContent = currentTimeFormatted;
+        document.getElementById('duration').textContent = durationFormatted;
+    }
+
+    function formatTime(time) {
+        var minutes = Math.floor(time / 60);
+        var seconds = Math.floor(time % 60);
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        return minutes + ':' + seconds;
+    }
+
+    function updateSongTitle(key) {
+    var songTitleElement = document.getElementById('songTitle');
+    songTitleElement.textContent = playlist[key].fields.title;
+}
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="artist__content">
+    <div class="media-cards">
+        <audio id="audioPlayer" controls style="display: none;" ontimeupdate="updateProgressBar()"></audio>
+        {% for key, value in songs.items %}
+        <div class="media-card">
+            <img class="media-card__image" src="{{ value.image.url }}" alt="{{ song.title }}">
+            <a class="media-card__footer">{{ value.title }}</a>
+            <div class="play-icon" onclick="playSong('{{ key }}', this)">
+                &#9654; <!-- Символ треугольника воспроизведения -->
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block current-track %}
+<div class="player-controls">
+    <!-- Кнопка Prev -->
+    <button onclick="playPreviousSong()">
+        &#8249;
+    </button>
+
+    <!-- Кнопка воспроизведения/паузы -->
+    <button onclick="togglePlayPause()">
+    <span id="playIcon">
+        &#9654;
+    </span>
+    </button>
+    <!-- Кнопка Next -->
+    <button onclick="playNextSong()">
+        &#8250;
+    </button>
+
+    <div id="progressContainer">
+        <div id="progressBar"></div>
+    </div>
+    <div id="timeContainer">
+        <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+        <span id="songTitle"></span>
+    </div>
+</div>
+{% endblock %}
+

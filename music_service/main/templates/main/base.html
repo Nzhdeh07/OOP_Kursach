@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Mut Nyut</title>
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var contentMiddle = $('div.content__middle');
+
+            if (contentMiddle[0].scrollHeight > contentMiddle.innerHeight()) {
+                contentMiddle.addClass('scrollable');
+            }
+
+            $(window).resize(function () {
+                if (contentMiddle[0].scrollHeight > contentMiddle.innerHeight()) {
+                    contentMiddle.addClass('scrollable');
+                } else {
+                    contentMiddle.removeClass('scrollable');
+                }
+            });
+        });
+    </script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+<div class="content__header">
+    <div class="title">
+        <a class="autorization-button" href="{% url 'home' %}">Mut Nyut</a>
+    </div>
+
+    <div class="current-track">
+        {% block current-track %}
+        {% endblock %}
+    </div>
+    <nav class="autorization">
+        <div>
+            {% if request.user.is_authenticated %}
+            <p>
+                <label class="autorization-button">{{ user.username }}</label>
+                <a class="autorization-button" href="{% url 'logout' %}">Logout</a>
+            </p>
+            {% else %}
+            <p>
+                <a class="autorization-button" href="{% url 'login' %}">Login</a>
+                <a class="autorization-button" href="{% url 'register_client' %}">Register</a>
+            </p>
+        </div>
+        {% endif %}
+    </nav>
+</div>
+
+<div class="container">
+
+    <div class="content__left">
+
+        <section class="navigation">
+
+            <!-- Function -->
+            <div class="navigation__list">
+
+                <div class="navigation__list__header">
+                    Function
+                </div>
+
+                <div class="collapse in" id="function">
+
+                    <a href="{% url 'key' %}" class="navigation__list__item">
+                        <span>Key</span>
+                    </a>
+
+                    <a href="{% url 'bpm' %}" class="navigation__list__item">
+                        <span>BPM</span>
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- Music -->
+            <div class="navigation__list">
+
+                <div class="navigation__list__header">
+                    Your Music
+                </div>
+
+                <div class="collapse in" id="yourMusic">
+
+                    <a href="{% url 'song_list' %}" class="navigation__list__item">
+                        <span>Songs</span>
+                    </a>
+
+                    <a href="{% url 'playlists' %}" class="navigation__list__item">
+                        <span>Playlists</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+        <div class="add">
+            {% block navigation_add %}
+            {% endblock %}
+            <a href="{% url 'add_song' %}" class="navigation__list__item2">
+                <span>Add Song</span>
+            </a>
+            <a href="{% url 'add_playlist' %}" class="navigation__list__item2">
+                <span>Add Playlist</span>
+            </a>
+            <a href="{% url 'delete_song' %}" class="navigation__list__item2">
+                <span>Delete song</span>
+            </a>
+            <a href="{% url 'delete_playlist' %}" class="navigation__list__item2">
+                <span>Delete_playlist</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="content__middle">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>

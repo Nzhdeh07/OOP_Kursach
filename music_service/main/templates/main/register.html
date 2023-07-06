@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'main/css/add_song.css' %}">
+{% endblock %}
+
+{% block content %}
+  <form method="post" >
+    {% csrf_token %}
+    <input type="text" id = 'id_username' name="username" required placeholder="Login">
+    <input type="password" id="id_password" name="password" required placeholder="Password">
+
+    <button type="submit">Register</button>
+  </form>
+{% endblock %}

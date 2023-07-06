@@ -1,0 +1,96 @@
+/* Стили для значка воспроизведения и паузы */
+.play-icon {
+    display: none; /* Скрыть изначально */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+
+/* Показать значок воспроизведения при наведении на песню */
+.media-card:hover .play-icon {
+    display: block;
+}
+
+/* Увеличить прозрачность значка при наведении */
+.media-card:hover .play-icon {
+    opacity: 1;
+}
+
+/* Позиционирование значка воспроизведения и паузы */
+.media-card {
+    position: relative;
+    display: inline-block;
+}
+
+/* Стили для картинки внутри медиа-карточки */
+.media-card img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+
+.player-controls {
+    width: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+#progressContainer {
+    width: 300px;
+    height: 7px;
+    background-color: #5e5e5e;
+    margin-right: 10px;
+    border-radius: 4px; /* Задаем скругления углов */
+    border: 1px solid #ccc; /* Задаем контур */
+}
+
+#progressBar {
+    height: 100%;
+    background-color: tan;
+    width: 0;
+}
+
+
+#timeContainer {
+    font-size: 14px;
+    font-weight: bold;
+    color: tan;
+}
+
+.control-buttons button {
+    margin: 0 5px;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button {
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 2px;
+    background-color: tan;
+}
+
+.instraaction {
+    color: white;
+    text-align: center;
+}

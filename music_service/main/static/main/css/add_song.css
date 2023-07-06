@@ -1,0 +1,114 @@
+/* Form Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.punkt {
+  display: block;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+
+
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c8c8c8;
+  border-radius: 5px;
+  background-color: #282828;
+  color: #aaaaaa;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1ed760;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #13b24e;
+}
+
+select{
+  height: 35px;
+  width: 300px;
+  padding: 0;
+  border: 1px solid #c8c8c8;
+  border-radius: 5px;
+  background-color: #282828;
+  color: #aaaaaa;
+}
+
+
+
+option{
+  text-align: center;
+  background-color: wheat;
+}
+
+
+/* Additional Styles */
+body {
+  background-color: #181818;
+}
+
+h2 {
+  color: #c8c8c8;
+  margin-bottom: 20px;
+}
+
+.content__middle {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.punkt{
+  position: relative;
+  margin-top: 10px;
+}
+
+button{
+  margin-top: 10px;
+  width: 150px;
+  border-radius: 10px;
+  height: 40px;
+  background-color: darkgreen;
+  color: black;
+}
+
+
+/* Override Bootstrap styles */
+.btn-primary {
+  background-color: #1ed760;
+  border-color: #1ed760;
+
+}
+
+.btn-primary:hover {
+  background-color: #13b24e;
+  border-color: #13b24e;
+}
+
+.btn-primary:focus {
+  box-shadow: none;
+}
+
