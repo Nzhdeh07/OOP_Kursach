@@ -4,8 +4,8 @@ Baboyan Nzhdeh, group 153504
 
 Project description
 
-Music service for storing, processing, mixing songs.
-The service helps musicians to get track data such as: chord name, tempo…
+Music service for storing and processing.
+The service helps musicians to get track data such as: key, tempo…
 
 System's class diagram 
 
